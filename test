@@ -1,0 +1,14 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+print("лелеле, я ебень XP. Игрок: " .. player.Name)
+
+-- Основная логика 
+local function main()
+    while true do
+        task.wait(1)
+        print("Работаю...")
+    end
+end
+
+pcall(main)
