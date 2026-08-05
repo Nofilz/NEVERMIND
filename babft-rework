@@ -1,0 +1,46 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Конфиг
+local CONFIG = {
+    buildingSpeed = 1,
+    autoCollect = true,
+    autoUpgrade = true,
+    safeMode = true,
+    range = 20
+}
+
+-- Основная функция
+local function main()
+    print("Авто-билдер запущен!")
+    
+    while task.wait(0.5) do
+        if not character or not humanoid or humanoid.Health <= 0 then
+            character = player.Character or player.CharacterAdded:Wait()
+            humanoid = character:WaitForChild("Humanoid")
+            task.wait(1)
+        end
+        
+        -- Здесь твоя логика билдера
+        -- Например, поиск объектов для строительства
+        for _, part in ipairs(Workspace:GetDescendants()) do
+            if part:IsA("BasePart") and part.Name:find("Build") then
+                -- Логика взаимодействия
+                if CONFIG.safeMode and (character.HumanoidRootPart.Position - part.Position).Magnitude > CONFIG.range then
+                    -- Игнорируем дальние объекты
+                end
+            end
+        end
+        
+        task.wait(0.1)
+    end
+end
+
+-- Запуск
+pcall(main)
